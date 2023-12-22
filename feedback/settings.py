@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'profiles', # added manually
     'reviews', # added manually
     'django.contrib.admin',
     'django.contrib.auth',
