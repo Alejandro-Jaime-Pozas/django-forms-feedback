@@ -5,6 +5,7 @@
 {% endblock title %}
 
 {% block content %}
+    {% comment %} for DetailView, need lowercase model name for this to work below {% endcomment %}
     <h1>{{ review.username }}</h1>
     <h4>{{ review.rating }}</h4>
     <p>{{ review.review_text }}</p>

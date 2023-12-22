@@ -1,8 +1,10 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.views import View # checkout docs, multiple View classes
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView, DetailView
 
 from .forms import ReviewForm
 from .models import Review
@@ -80,6 +82,19 @@ def thank_you(request):
     return render(request, 'reviews/thank_you.html')
 
 
+# returning a list in list view
+class ReviewsListView2(ListView):
+    template_name = 'reviews/review_list.html' # django auto returns get() req for url
+    model = Review 
+    context_object_name = 'reviews' # need to assign a list name here
+    # you can perform filters, sorts on the data by using fn get_queryset
+    def get_queryset(self) -> QuerySet[Any]:
+        base_query = super().get_queryset() 
+        final = base_query.filter(rating__gt=4)
+        return final
+    
+
+# returning a list in template view
 class ReviewsListView(TemplateView):
     template_name = 'reviews/review_list.html' # django auto returns get() req for url
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
@@ -89,6 +104,13 @@ class ReviewsListView(TemplateView):
         return context
     
 
+class SingleReviewView2(DetailView):
+    template_name = 'reviews/single_review.html'
+    model = Review 
+    
+
+
+# returning a single obj view in template view
 class SingleReviewView(TemplateView):
     template_name = 'reviews/single_review.html'
 
