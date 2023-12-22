@@ -5,11 +5,31 @@ from django.http import HttpResponseRedirect
 from django.views import View # checkout docs, multiple View classes
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView, CreateView
 
 from .forms import ReviewForm
 from .models import Review
 
 # Create your views here.
+
+# create view: don't need a form, it creates and submits form for you
+class ReviewView3(CreateView):
+    model = Review # specify the form for create view to create form
+    form_class = ReviewForm # specify form so django handles errors/labels
+    # fields = '__all__' # indicate the fields you want
+    template_name = 'reviews/index.html' # this takes care of the GET logic, as well as POST logic
+    success_url = '/thank-you' # need url to redirect to 
+
+
+# form view
+class ReviewView2(FormView):
+    form_class = ReviewForm # specify the form
+    template_name = 'reviews/index.html' # this takes care of the GET logic, as well as POST logic
+    success_url = '/thank-you' # need url to redirect to 
+    def form_valid(self, form):
+        form.save() # need to save form prior
+        return super().form_valid(form)
+    
 
 # review view as a class; django will handle incoming request based on function name ie 'get()'
 class ReviewView(View):
@@ -87,11 +107,11 @@ class ReviewsListView2(ListView):
     template_name = 'reviews/review_list.html' # django auto returns get() req for url
     model = Review 
     context_object_name = 'reviews' # need to assign a list name here
-    # you can perform filters, sorts on the data by using fn get_queryset
-    def get_queryset(self) -> QuerySet[Any]:
-        base_query = super().get_queryset() 
-        final = base_query.filter(rating__gt=4)
-        return final
+    # # you can perform filters, sorts on the data by using fn get_queryset
+    # def get_queryset(self) -> QuerySet[Any]:
+    #     base_query = super().get_queryset() 
+    #     final = base_query.filter(rating__gt=4)
+    #     return final
     
 
 # returning a list in template view
@@ -107,7 +127,7 @@ class ReviewsListView(TemplateView):
 class SingleReviewView2(DetailView):
     template_name = 'reviews/single_review.html'
     model = Review 
-    
+    # to access the returned data in html templates, use model name in lowercase
 
 
 # returning a single obj view in template view
