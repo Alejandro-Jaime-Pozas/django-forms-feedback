@@ -124,4 +124,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROUTE = BASE_DIR / 'uploads' # added this manually
+MEDIA_ROOT = BASE_DIR / 'uploads' # added this manually
