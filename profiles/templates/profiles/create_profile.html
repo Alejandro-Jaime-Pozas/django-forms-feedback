@@ -9,8 +9,12 @@
   <link rel="stylesheet" href="{% static "profiles/styles.css" %}">
 </head>
 <body>
-  <form>
-    <input type="file" />
+    {% comment %} modify form so that browser knows a multipart file is going to be posted {% endcomment %}
+  <form action='/profiles/' method='POST' enctype='multipart/form-data' >
+    {% csrf_token %}
+    {{ form }}
+    {% comment %} manual image upload input {% endcomment %}
+    {% comment %} <input type="file" name='image'  /> {% endcomment %}
     <button>Upload</button>
   </form>
 </body>
