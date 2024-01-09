@@ -124,4 +124,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_ROOT = BASE_DIR / 'uploads' # added this manually
+MEDIA_ROOT = BASE_DIR / 'uploads' # added this ref to directory manually, takes into acct when files are uploaded and moved

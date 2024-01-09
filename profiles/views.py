@@ -26,7 +26,7 @@ class CreateProfileView(View):
         })
     
 
-# # basic static approach to store a file into hard disk (not ideal)
+# # basic static approach to store a file into hard disk (not ideal since limited file types)
 # def store_file(file):
 #     with open('temp/me.jpg', 'wb+') as dest:
 #         for chunk in file.chunks():
