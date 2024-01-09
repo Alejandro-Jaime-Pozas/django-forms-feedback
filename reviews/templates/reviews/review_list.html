@@ -8,7 +8,9 @@
     <ul>
         {% comment %} if using ListView, the default returned list value is always object_list {% endcomment %}
         {% for review in reviews %}
-            <li>{{ review.username }} (Rating: {{ review.rating }}) (id: {{ review.id }}) PK: {{ review.pk }}</li>
+            <li>
+                {{ review.username }} (Rating: {{ review.rating }}) (id: {{ review.id }}) PK: {{ review.pk }}
+            </li>
         {% endfor %}
     </ul>
 {% endblock content %}
