@@ -129,6 +129,14 @@ class SingleReviewView2(DetailView):
     model = Review 
     # to access the returned data in html templates, use model name in lowercase
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs) # this is an object
+        loaded_review = self.object # this returns the review obj being rendered
+        request = self.request
+        favorite_id = request.session.get('favorite_review') # current fav for user
+        context['is_favorite'] = favorite_id == str(loaded_review.id) # comparing str vs int
+        return context
+
 
 # returning a single obj view in template view
 class SingleReviewView(TemplateView):
@@ -139,3 +147,11 @@ class SingleReviewView(TemplateView):
         context['review'] = Review.objects.get(id=kwargs['id']) # can get kwargs from path() which contains the 'id' in its url
         print(kwargs)
         return context 
+    
+
+class AddFavoriteView(View):
+    def post(self, request):
+        review_id = request.POST.get('review_id') # from single_review.html
+        # fav_review = Review.objects.get(pk=review_id) # this not ideal since fav_review is an object, being a review, and is not JSON serializable/readable. only primitive data types here
+        request.session['favorite_review'] = review_id # request object has a session prop to add new data
+        return HttpResponseRedirect('/reviews/' + review_id)
