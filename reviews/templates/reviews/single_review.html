@@ -9,4 +9,6 @@
     <h1>{{ object.username }}</h1>
     <h4>{{ review.rating }}</h4>
     <p>{{ review.review_text }}</p>
+    {% comment %} create Favorite button that is stored in the user session, not in database {% endcomment %}
+    <button>Favorite</button>
 {% endblock content %}

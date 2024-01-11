@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware', # for session mgmt
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -126,3 +126,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR / 'uploads' # added this ref to directory manually; points to the specific path in the local system where files are stored
 MEDIA_URL = '/user-media/' # points to the url that will serve files that are stored
+
+SESSION_COOKIE_AGE = 3600*24*7 # (optional; default = 2 weeks) set cookie optional to change how long a user session lasts in seconds
